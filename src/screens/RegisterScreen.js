@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import Button from "../UI/Button";
+import { sendCode } from "../services/api";
 
 const RegisterScreen = () => {
   const [username, setUsername] = useState("");
@@ -17,24 +18,31 @@ const RegisterScreen = () => {
 
   const navigation = useNavigation();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!username || !lastName || !phone) {
       Alert.alert("Validation Error", "All fields are required!");
       return;
     }
 
-    // Handle form submission
-    Alert.alert(
-      "Form Submitted",
-      `Username: ${username}, Password: ${lastName}, Phone: ${phone}`
-    );
+    try {
+      const response = await sendCode();
 
-    navigation.navigate("CodeScreen");
+      if (response.success) {
+        Alert.alert("Code Sent", `The verification code is ${response.code}`);
+
+        navigation.navigate("CodeScreen");
+      } else {
+        Alert.alert("Error", "Failed to send code.");
+      }
+    } catch (error) {
+      Alert.alert("Error", "An error occurred while sending code.");
+    }
 
     setUsername("");
     setLastName("");
     setPhone("");
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.mainText}>Welcome to App</Text>
@@ -53,7 +61,6 @@ const RegisterScreen = () => {
           value={lastName}
           onChangeText={(text) => setLastName(text)}
           placeholder="Enter last name"
-          secureTextEntry={false}
         />
         <Text style={styles.label}>Phone number</Text>
         <TextInput
@@ -61,7 +68,6 @@ const RegisterScreen = () => {
           value={phone}
           onChangeText={(text) => setPhone(text)}
           placeholder="+33 222 111 2222"
-          secureTextEntry={false}
         />
       </View>
       <Button text="Continue" handleSubmit={handleSubmit} />
@@ -98,7 +104,7 @@ const styles = StyleSheet.create({
   },
   descr: {
     fontSize: 16,
-    fontWeight: 400,
+    fontWeight: "400",
     marginBottom: 40,
     fontFamily: "Inter",
     color: "#667085",
@@ -123,7 +129,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     placeHolderTextColor: "#667085",
   },
-
   reg: {
     flexDirection: "row",
   },

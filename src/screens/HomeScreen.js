@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-// import ConfirmationScreen from "./src/screens/Confirmation";
 import mainImage from "../images/mainImg.png";
 import { useNavigation } from "@react-navigation/native";
 import Button from "../UI/Button";
@@ -57,35 +56,4 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     fontFamily: "Inter",
   },
-  //   login: {
-  //     marginBottom: 10,
-  //     width: "100%",
-  //     height: 44,
-  //     backgroundColor: "#30b0c7",
-  //     borderRadius: 8,
-  //     alignItems: "center",
-  //     justifyContent: "center",
-  //   },
-  //   btnText: {
-  //     color: "white",
-  //     fontSize: 16,
-  //     fontWeight: "bold",
-  //     fontFamily: "Inter",
-  //   },
-  //   register: {
-  //     width: "100%",
-  //     height: 44,
-  //     backgroundColor: "transparent",
-  //     borderWidth: 1,
-  //     borderColor: "#c4c5c6",
-  //     borderRadius: 8,
-  //     alignItems: "center",
-  //     justifyContent: "center",
-  //   },
-  //   regText: {
-  //     fontSize: 16,
-  //     fontWeight: "bold",
-  //     fontFamily: "Inter",
-  //     color: "",
-  //   },
 });

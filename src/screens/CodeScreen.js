@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { CodeField, Cursor } from "react-native-confirmation-code-field";
+import { verifyCode } from "../services/api";
 
 const CodeScreen = () => {
   const [value, setValue] = useState("");
@@ -10,28 +11,31 @@ const CodeScreen = () => {
 
   const navigation = useNavigation();
 
-  const verificationCode = "123456";
+  const handleSubmit = async () => {
+    try {
+      const response = await verifyCode({ code: value });
+      if (response.success) {
+        navigation.navigate("Confirmation");
+      } else {
+        Alert.alert("Error", "Invalid code.");
+      }
+    } catch (error) {
+      Alert.alert("Error", "An error occurred while verifying code.");
+    }
+  };
 
   useEffect(() => {
-    if (value === verificationCode) {
+    if (value.length === CELL_COUNT) {
       setActive(true);
     } else {
       setActive(false);
     }
   }, [value]);
 
-  const handleSubmit = () => {
-    if (active) {
-      navigation.navigate("Confirmation");
-      console.log("Code is correct, navigating...");
-    }
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.mainText}>Welcome to App</Text>
       <Text style={styles.descr}>
-        {" "}
         Enter the confirmation code that will be sent to you by SMS
       </Text>
 

@@ -39,7 +39,7 @@ const LoginScreen = () => {
         />
       </View>
 
-      <Button text="Login" link="Confirmation" />
+      <Button text="Login" link="Confirmation" handleSubmit={handleSubmit} />
 
       <View style={styles.reg}>
         <Text style={styles.textReg}>Don't you have an account?</Text>
